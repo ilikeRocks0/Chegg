@@ -1,7 +1,7 @@
-import GameInstance
-import GameDataManager
-import GameStateManager
-import UnitDataManager
+from GameInstance import GameInstance
+from GameDataManager import GameDataManager
+from GameStateManager import GameStateManager
+from UnitDataManager import UnitDataManager
 from enum import Enum, auto
 
 class GameMessageManager:

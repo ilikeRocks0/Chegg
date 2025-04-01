@@ -1,6 +1,6 @@
 from UnitData import UnitData
-import UnitDataManager
-import GameDataManager
+from UnitDataManager import UnitDataManager
+from GameDataManager import GameDataManager
 import random
 class CardStateManager:
     MAX_HAND_SIZE = 15
@@ -12,7 +12,7 @@ class CardStateManager:
     player1Hand: list[UnitData]
     player2Hand: list[UnitData]
 
-    def __init__(self, UDM, GDM, p1D:list[str], p2D:list[str]):
+    def __init__(self, UDM, GDM):
         self.unitManager = UDM
         self.gameManager = GDM
         self.player1Deck = list()
@@ -20,15 +20,17 @@ class CardStateManager:
         self.player1Hand = list()
         self.player2Hand = list()
 
+        
+        
+    def loadDataFromServer(self, p1D:list[str], p2D:list[str]):
         for unitName in p1D:
-            self.player1Deck.append(UDM.getUnit(unitName))
+            self.player1Deck.append(self.unitManager.getUnit(unitName))
 
         for unitName in p2D:
-            self.player2Deck.append(UDM.getUnit(unitName))
+            self.player2Deck.append(self.unitManager.getUnit(unitName))
         
         random.shuffle(self.player1Deck)
         random.shuffle(self.player2Deck)
-        
 
     def drawCard(self, playerID) -> UnitData: 
         deck = None
