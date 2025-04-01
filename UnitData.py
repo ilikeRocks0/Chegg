@@ -1,8 +1,19 @@
+from enum import Enum, auto
+from UnitData import Attack 
 class UnitData:
     name: str
     cost: int
-    moveList: list
-    attackList: list
-    deathTriggers: list
-    placeTriggers: list
-    moveTriggers: list
+    move: list
+    attack: Attack
+    death: list
+    place: list
+
+
+class AttackType:
+    ATTACK_SINGLE = auto()
+    ATTACK_GROUP = auto()
+
+class Attack:
+    attackType: AttackType
+    attacks: list
+    modifier: str
