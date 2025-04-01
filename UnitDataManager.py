@@ -1,6 +1,20 @@
-import UnitData
+from UnitData import UnitData 
 class UnitDataManager:
+    VILLAGER:str = "villager" 
+    unitList: dict[str, UnitData]
+    
 
+    def __init__(self, units: dict[str, dict]):
+        for unit in units:
+            newUnit = UnitData(unit["name"], unit["cost"], unit["moves"], unit["attacks"], unit["death"])
 
-    def __init__(self):
+            if(unit["modifiers"] == "extra_move_cost"):
+                newUnit.moveCostFirst+=1
+                newUnit.moveCostSecond+=1
+            self.unitList[newUnit.name, newUnit]
         
+    def checkUnit(self, unitName: str):
+        for unit in self.unitList.keys():
+            if (unit == unitName):
+                return True
+        return False

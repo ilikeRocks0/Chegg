@@ -1,15 +1,16 @@
 {
     Villager:
     {
-        Name: Villager
-        Cost: 0
-        Moves: [(-1,-1), (-1,0), (-1,1), (0,-1), (0,1), (1,-1), (1,0), (1,1)]
-        Attacks: [
+        name: Villager
+        cost: 0
+        moves: [(-1,-1), (-1,0), (-1,1), (0,-1), (0,1), (1,-1), (1,0), (1,1)]
+        attacks: [
             AttackType: attack_single
             Attacks: [(-1,-1), (-1,0), (-1,1), (0,-1), (0,1), (1,-1), (1,0), (1,1)]
-            Modifiers: move_on_attack
+            modifiers: move_on_attack
         ]
-        Death: lose_game
+        death: lose_game
+        modifiers: extra_move_cost
     }
 
 
