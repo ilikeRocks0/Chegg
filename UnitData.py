@@ -1,6 +1,7 @@
+from BoardTile import BoardTile
 from enum import Enum, auto
 from UnitData import Attack 
-class UnitData:
+class UnitData(BoardTile):
     name: str
     cost: int
     move: list
