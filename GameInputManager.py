@@ -16,7 +16,7 @@ class GameInputManager:
         # validate units are real and cards add up to 15
         cardCount = 0
         containsVillager = False
-        for key in deck.keys:
+        for key in deck.keys():
             if(self.unitData.checkUnit(key)):
                if(deck[key] == self.unitData.Villager):
                    containsVillager = True
