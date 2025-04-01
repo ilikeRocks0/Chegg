@@ -1,24 +1,20 @@
 from UnitData import UnitData
 import UnitDataManager
 import GameDataManager
-import EventHolder
 import random
-from EventData import Event
 class CardStateManager:
+    MAX_HAND_SIZE = 15
     unitManager: UnitDataManager
     gameManager: GameDataManager
-    event: EventHolder
 
-    MAX_HAND_SIZE = 15
     player1Deck: list[UnitData]
     player2Deck: list[UnitData]
     player1Hand: list[UnitData]
     player2Hand: list[UnitData]
 
-    def __init__(self, UDM, GDM, EH,p1D:list[str], p2D:list[str]):
+    def __init__(self, UDM, GDM, p1D:list[str], p2D:list[str]):
         self.unitManager = UDM
         self.gameManager = GDM
-        self.event = EH
         self.player1Deck = list()
         self.player2Deck = list()
         self.player1Hand = list()
@@ -34,7 +30,7 @@ class CardStateManager:
         random.shuffle(self.player2Deck)
         
 
-    def drawCard(self, playerID, amount): 
+    def drawCard(self, playerID) -> UnitData: 
         deck = None
         hand = None
         if (playerID == self.gameManager.PLAYER1):
@@ -44,15 +40,30 @@ class CardStateManager:
             deck = self.player2Deck
             hand = self.player2Hand
 
-        for num in range(amount):
-            if(len(deck) <= 0):
-                self.event.addEvent(Event.DRAW_CARD_NONE, playerID)
-            else:
-                unit = deck.pop()
-                hand.append(unit)
-                self.event.addEvent(Event.DRAW_CARD_NONE, playerID, unit)
+        if(len(deck) <= 0):
+            return None
+        else:
+            unit = deck.pop()
+            hand.append(unit)
+            return unit
+            # self.event.addEvent(Event.DRAW_CARD_NONE, playerID, unit)
 
+    def drawCardForce(self, playerID, unit:str) -> UnitData: 
+        deck = None
+        if (playerID == self.gameManager.PLAYER1):
+            deck = self.player1Deck
+        elif (playerID == self.gameManager.PLAYER2):
+            deck = self.player2Deck
 
+        return self.__locateCard(deck, unit)
+        
+    #locates a card within the deck
+    def __locateCard(self, deck:list[UnitData], unitName:str):
+        for unit in deck:
+            if (unit.name == unitName):
+                return unit
+        return None
+        
     def hasCard(self, playerID, unitName:str) -> bool:
         hand = None
         if (playerID == self.gameManager.PLAYER1):
