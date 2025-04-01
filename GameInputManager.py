@@ -65,8 +65,6 @@ class GameInputManager:
 
 
     def loadMessagePlace(self, playerID:int, unit:str, posX:int, posY:int):
-        unitPlace = MessageUnitPlace(playerID, unit, posX, posY)
-
         if(not self.__checkPlayerAndUnit(playerID, unit, posX, posY)):
             return None
         
@@ -79,25 +77,30 @@ class GameInputManager:
         if(not self.boardData.isEmpty(posX, posY)):
             return None
 
-        return unitPlace
+        return MessageUnitPlace(playerID, unit, posX, posY)
     
     
     def loadMessageMove(self, playerID:int, unit:str, posX:int, posY:int, newPosX:int, newPosY:int):
-        unitMove = MessageUnitMove(playerID, unit, posX, posY, newPosX, newPosY)
-        
-
         if(not self.__checkPlayerAndUnit(playerID, unit, posX, posY)):
             return None
         
-        if(self.boardData.getUnitOnSpace(unit, playerID, posX, posY) == None):
+        boardUnit = self.boardData.getUnitOnSpace(posX, posY)
+        
+        if(boardUnit == None):
             return None
         
-        if(not self.boardData.getUnitOnSpace(unit, playerID, posX, posY).movedThisTurn 
+        if(boardUnit.name != unit):
+            return None
+        
+        if(boardUnit.owner != playerID):
+            return None
+
+        if(not unit.movedThisTurn 
            and self.gameData.getMana(playerID) < self.unitData.getUnit(unit).moveCostFirst):
             return None
 
-        if(self.boardData.getUnitOnSpace(unit, playerID, posX, posY).movedThisTurn
+        if(unit.movedThisTurn
            and self.gameData.getMana(playerID) < self.unitData.getUnit(unit).moveCostSecond):
             return None
         
-        return unitMove
+        return MessageUnitMove(playerID, unit, posX, posY, newPosX, newPosY)
