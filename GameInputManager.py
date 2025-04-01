@@ -64,7 +64,10 @@ class GameInputManager:
         return True
 
 
-    def loadMessagePlace(self, playerID:int, unit:str, posX:int, posY:int):
+    def loadMessagePlace(self, messageType:str, playerID:int, unit:str, posX:int, posY:int):
+        if(messageType != "UnitPlacement"):
+            return None
+        
         if(not self.__checkPlayerAndUnit(playerID, unit, posX, posY)):
             return None
         
@@ -80,7 +83,10 @@ class GameInputManager:
         return MessageUnitPlace(playerID, unit, posX, posY)
     
     
-    def loadMessageMove(self, playerID:int, unit:str, posX:int, posY:int, newPosX:int, newPosY:int):
+    def loadMessageMove(self, messageType:str, playerID:int, unit:str, posX:int, posY:int, newPosX:int, newPosY:int):
+        if(messageType != "UnitMove"):
+            return None
+        
         if(not self.__checkPlayerAndUnit(playerID, unit, posX, posY)):
             return None
         
