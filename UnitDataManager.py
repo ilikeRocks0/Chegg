@@ -18,3 +18,9 @@ class UnitDataManager:
             if (unit == unitName):
                 return True
         return False
+    
+    def getUnit(self, unitName:str):
+        for unit in self.unitList.keys():
+            if (unit == unitName):
+                return self.unitList[unit]
+        return None

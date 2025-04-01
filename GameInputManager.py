@@ -1,7 +1,8 @@
-import UnitDataManager
-import BoardStateManager
-import GameDataManager
-import CardStateManager
+from UnitDataManager import UnitDataManager 
+from UnitData import UnitData
+from BoardStateManager import BoardStateManager
+from GameDataManager import GameDataManager
+from CardStateManager import CardStateManager
 from MessageObjects import *
 import json
 
@@ -72,7 +73,7 @@ class GameInputManager:
         if(not self.cardData.hasCard(playerID, unit)):
             return None
         
-        if(self.gameData.getMana(playerID) < self.unitData.getManaCost(unit)):
+        if(self.gameData.getMana(playerID) < self.unitData.getUnit(unit).cost):
             return None
         
         if(not self.boardData.isEmpty(posX, posY)):
@@ -83,6 +84,7 @@ class GameInputManager:
     
     def loadMessageMove(self, playerID:int, unit:str, posX:int, posY:int, newPosX:int, newPosY:int):
         unitMove = MessageUnitMove(playerID, unit, posX, posY, newPosX, newPosY)
+        
 
         if(not self.__checkPlayerAndUnit(playerID, unit, posX, posY)):
             return None
@@ -91,11 +93,11 @@ class GameInputManager:
             return None
         
         if(not self.boardData.getUnitOnSpace(unit, playerID, posX, posY).movedThisTurn 
-           and self.gameData.getMana(playerID) < self.unitData.getMoveCostFirst(unit)):
+           and self.gameData.getMana(playerID) < self.unitData.getUnit(unit).moveCostFirst):
             return None
 
         if(self.boardData.getUnitOnSpace(unit, playerID, posX, posY).movedThisTurn
-           and self.gameData.getMana(playerID) < self.unitData.getMoveCostSecond(unit)):
+           and self.gameData.getMana(playerID) < self.unitData.getUnit(unit).moveCostSecond):
             return None
         
         return unitMove
