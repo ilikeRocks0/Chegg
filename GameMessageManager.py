@@ -18,9 +18,9 @@ class GameMessageManager:
         self.unitData = unitData
 
     
-    def loadDataFromServer(self, playerID:int, p1Deck:dict[str], p2Deck:dict[str]):
+    def loadDataFromServer(self, p1Deck:dict[str], p2Deck:dict[str]):
         if(self.gameState.canGameStart()):
-            self.gameInstance.loadData(playerID, p1Deck, p2Deck)
+            self.gameInstance.loadData(p1Deck, p2Deck)
             self.gameState.gameStart()
             return True
         

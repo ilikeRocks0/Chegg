@@ -1,4 +1,5 @@
 from UnitData import UnitData 
+from ActiveBoardPiece import ActiveBoardPiece
 class UnitDataManager:
     VILLAGER:str = "villager" 
     unitList: dict[str, UnitData]
@@ -23,4 +24,10 @@ class UnitDataManager:
         for unit in self.unitList.keys():
             if (unit == unitName):
                 return self.unitList[unit]
+        return None
+    
+    def getActiveUnit(self, playerID, unitName:str):
+        for unit in self.unitList.keys():
+            if (unit == unitName):
+                return ActiveBoardPiece(playerID, self.unitList[unit])
         return None

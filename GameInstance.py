@@ -2,7 +2,6 @@ from GameDataManager import GameDataManager
 from UnitDataManager import UnitDataManager
 from CardStateManager import CardStateManager
 from BoardStateManager import BoardStateManager
-from enum import Enum, auto
 
 class GameInstance:
     def __init__(self, cardData:CardStateManager, boardData:BoardStateManager, gameData:GameDataManager, unitData:UnitDataManager):
@@ -11,10 +10,14 @@ class GameInstance:
         self.cardData = cardData
         self.boardData = boardData
 
-    def loadData(self, playerID, p1Deck, p2Deck):
-        pass
+    def loadData(self, p1Deck, p2Deck):
+        self.cardData.loadDataFromServer(p1Deck, p2Deck)
 
-    def placeUnit(self):
+    def placeUnit(self, playerID, unit, posX, posY):
+        newUnit = self.unitData.getActiveUnit(unit)
+
+        self.boardData.placeUnit(newUnit, posX, posY)
+
         pass
 
     def attackUnit(self):
