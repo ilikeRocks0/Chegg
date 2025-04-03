@@ -4,6 +4,7 @@ from BoardStateManager import BoardStateManager
 from GameDataManager import GameDataManager
 from CardStateManager import CardStateManager
 from MessageObjects import *
+from ActiveBoardPiece import ActiveBoardPiece
 import json
 
 class GameInputManager:
@@ -110,3 +111,57 @@ class GameInputManager:
             return None
         
         return MessageUnitMove(playerID, unit, posX, posY, newPosX, newPosY)
+
+    def loadMessageAttack(self, messageType:str, playerID:int, unit:str, posX:int, posY:int, attackNum:int):
+        if(messageType != "UnitAttack"):
+            return None
+        
+        if(not self.__checkPlayerAndUnit(playerID, unit, posX, posY)):
+            return None
+        
+        boardUnit:ActiveBoardPiece = self.boardData.getUnitOnSpace(posX, posY)
+        
+        if(boardUnit == None):
+            return None
+        
+        if(boardUnit.name != unit):
+            return None
+        
+        if(boardUnit.owner != playerID):
+            return None
+        
+        if(boardUnit.getMaxAttack() > attackNum):
+            return None
+
+        if(self.gameData.getMana(playerID) < self.unitData.getUnit(unit).attackCost):
+            return None
+
+        
+        return MessageUnitAttack(playerID, unit, posX, posY, attackNum)
+
+    def loadMessageSpecial(self, messageType:str, playerID:int, unit:str, posX:int, posY:int, specialNum:int):
+        if(messageType != "UnitAttack"):
+            return None
+        
+        if(not self.__checkPlayerAndUnit(playerID, unit, posX, posY)):
+            return None
+        
+        boardUnit:ActiveBoardPiece = self.boardData.getUnitOnSpace(posX, posY)
+        
+        if(boardUnit == None):
+            return None
+        
+        if(boardUnit.name != unit):
+            return None
+        
+        if(boardUnit.owner != playerID):
+            return None
+        
+        if(boardUnit.getMaxSpecial() > specialNum):
+            return None
+
+        if(self.gameData.getMana(playerID) < self.unitData.getUnit(unit).attackCost):
+            return None
+
+        
+        return MessageUnitAttack(playerID, unit, posX, posY, specialNum)
