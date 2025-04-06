@@ -1,0 +1,3 @@
+
+class EventHolder:
+    pass

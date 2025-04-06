@@ -37,7 +37,7 @@ class UnitData:
         return -1
     
     #so you dont have to call attack variable
-    def getSpecial(self, index):
+    def getSpecial(self, index) -> tuple[int,int]:
         if (self.attack != None):
             return self.special.getSpecial(index)
         return None
@@ -63,7 +63,10 @@ class Attack:
         return self.attacks[index]
     
 class SpecialType(Enum):
-    pass
+    EXPLODE = auto()
+
+class DeathType(Enum):
+    EXPLODE = auto()
 class Special:
     specialType: SpecialType
     specials: list

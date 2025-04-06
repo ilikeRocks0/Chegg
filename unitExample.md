@@ -6,7 +6,7 @@
         moves: [(-1,-1), (-1,0), (-1,1), (0,-1), (0,1), (1,-1), (1,0), (1,1)]
         attacks: [
             AttackType: attack_single
-            Attacks: [(-1,-1), (-1,0), (-1,1), (0,-1), (0,1), (1,-1), (1,0), (1,1)]
+            AttacksList: [(-1,-1), (-1,0), (-1,1), (0,-1), (0,1), (1,-1), (1,0), (1,1)]
             modifiers: move_on_attack
         ]
         death: lose_game
@@ -30,10 +30,11 @@
         Name: Creeper
         Cost: 1
         Moves: [(-1,-1), (-1,0), (-1,1), (0,-1), (0,1), (1,-1), (1,0), (1,1)]
-        Attacks: [
-            AttackType: attack_group
-            Attacks: [[(-1,-1), (-1,0), (-1,1), (0,-1), (0,1), (1,-1), (1,0), (1,1)]]
+        Special: [
+            SpecialType: explode
+            SpecialsLists: [(0,0)]
         ]
+        Death: explode
     }
 
 }

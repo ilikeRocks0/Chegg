@@ -11,11 +11,36 @@ class ActiveBoardPiece(UnitData):
             parent.special,
             parent.death
         )
-        
+
         self.owner = playerID
         self.movedOnce = False
         self.movedTwice = False
         self.attacked = False
+        self.specialed = False
+        self.posX = -1
+        self.posY = -1
 
+    def unitPlaced(self, posX, posY):
+        self.posX = posX
+        self.posY = posY
 
+    def unitMoved(self, posX, posY):
+        self.posX = posX
+        self.posY = posY
+        
+        if(not self.movedOnce):
+            self.movedOnce = True
+        elif (not self.movedTwice):
+            self.moveCostSecond = True
 
+    def unitAttacked(self):
+        self.attacked = True
+    
+    def unitSpecialed(self):
+        self.special = True
+
+    def endTurn(self):
+        self.attacked = False
+        self.movedOnce = False
+        self.movedTwice = False
+        self.special = False
